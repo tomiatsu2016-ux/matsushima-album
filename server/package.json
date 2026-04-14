@@ -1,0 +1,16 @@
+{
+  "name": "matsushima-album-bot",
+  "version": "1.0.0",
+  "description": "LINE Bot → GitHub Pages 自動アルバム更新",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^9.3.0",
+    "express": "^4.19.2",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5"
+  }
+}

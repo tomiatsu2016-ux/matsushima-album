@@ -1,0 +1,38 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'photos/**'
+      - 'index.html'
+      - '.github/workflows/deploy.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate photos-list.js
+        run: |
+          echo "const PHOTO_LIST = [" > photos-list.js
+          for f in $(ls photos/*.{jpg,jpeg,png,gif,webp,JPG,JPEG,PNG,mp4,MP4,mov,MOV,webm,m4v} 2>/dev/null | sort); do
+            echo "  '$f'," >> photos-list.js
+          done
+          echo "];" >> photos-list.js
+          echo "生成した写真リスト:"
+          cat photos-list.js
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - uses: actions/deploy-pages@v4
