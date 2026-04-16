@@ -26,10 +26,7 @@
       margin-bottom: 8px;
     }
 
-    header p {
-      color: #aaa;
-      font-size: 0.95rem;
-    }
+    header p { color: #aaa; font-size: 0.95rem; }
 
     #photo-count {
       text-align: center;
@@ -38,14 +35,57 @@
       font-size: 0.9rem;
     }
 
+    /* イベントセクション */
+    .event-section {
+      max-width: 1400px;
+      margin: 0 auto 30px;
+      padding: 0 20px;
+    }
+
+    .event-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 10px 16px;
+      background: #2a2a3e;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .event-header:hover { background: #333352; }
+
+    .event-icon { font-size: 1.2rem; }
+
+    .event-name {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #f0c27f;
+      flex: 1;
+    }
+
+    .event-count {
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    .event-edit-btn {
+      background: none;
+      border: 1px solid #555;
+      color: #aaa;
+      padding: 3px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .event-edit-btn:hover { border-color: #f0c27f; color: #f0c27f; }
+
     /* グリッドギャラリー */
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 10px;
-      padding: 20px;
-      max-width: 1400px;
-      margin: 0 auto;
     }
 
     .gallery-item {
@@ -88,17 +128,17 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.7));
-      padding: 20px 10px 8px;
-      font-size: 0.8rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding: 24px 8px 6px;
+      font-size: 0.75rem;
       color: #ddd;
       opacity: 0;
       transition: opacity 0.2s;
     }
 
-    .gallery-item:hover .caption {
-      opacity: 1;
-    }
+    .gallery-item:hover .caption { opacity: 1; }
+
+    .caption .sender { color: #f0c27f; }
 
     /* ライトボックス */
     #lightbox {
@@ -112,23 +152,55 @@
       flex-direction: column;
     }
 
-    #lightbox.active {
-      display: flex;
-    }
+    #lightbox.active { display: flex; }
 
     #lightbox img,
     #lightbox video {
       max-width: 90vw;
-      max-height: 80vh;
+      max-height: 65vh;
       border-radius: 6px;
       object-fit: contain;
     }
 
-    #lightbox-caption {
+    #lightbox-info {
       margin-top: 14px;
-      color: #ccc;
-      font-size: 0.95rem;
+      text-align: center;
+      max-width: 600px;
+      width: 90vw;
     }
+
+    #lightbox-event {
+      color: #f0c27f;
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    #lightbox-detail {
+      color: #999;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+
+    #lightbox-memo {
+      color: #ccc;
+      font-size: 0.9rem;
+      font-style: italic;
+      margin-bottom: 8px;
+    }
+
+    .lb-edit-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid #555;
+      color: #ccc;
+      padding: 6px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      margin: 4px;
+    }
+
+    .lb-edit-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
 
     #lightbox-close {
       position: fixed;
@@ -158,12 +230,80 @@
     }
 
     #lightbox-prev:hover,
-    #lightbox-next:hover {
-      background: rgba(255,255,255,0.25);
-    }
+    #lightbox-next:hover { background: rgba(255,255,255,0.25); }
 
     #lightbox-prev { left: 10px; }
     #lightbox-next { right: 10px; }
+
+    /* 編集モーダル */
+    #edit-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #edit-modal.active { display: flex; }
+
+    .edit-box {
+      background: #2a2a3e;
+      border-radius: 12px;
+      padding: 24px;
+      width: 90vw;
+      max-width: 400px;
+    }
+
+    .edit-box h3 {
+      color: #f0c27f;
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+    }
+
+    .edit-box label {
+      display: block;
+      color: #aaa;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+      margin-top: 12px;
+    }
+
+    .edit-box input,
+    .edit-box textarea {
+      width: 100%;
+      padding: 8px 12px;
+      background: #1a1a2e;
+      border: 1px solid #555;
+      border-radius: 6px;
+      color: #eee;
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+
+    .edit-box textarea { height: 80px; resize: vertical; }
+
+    .edit-box input:focus,
+    .edit-box textarea:focus { border-color: #f0c27f; outline: none; }
+
+    .edit-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      justify-content: flex-end;
+    }
+
+    .edit-actions button {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .btn-save { background: #f0c27f; color: #1a1a2e; font-weight: bold; }
+    .btn-cancel { background: #444; color: #ccc; }
 
     /* 写真がない場合 */
     .empty-state {
@@ -174,12 +314,6 @@
 
     .empty-state h2 { font-size: 1.3rem; margin-bottom: 12px; color: #888; }
     .empty-state p { line-height: 1.8; font-size: 0.9rem; }
-    .empty-state code {
-      background: #2a2a3e;
-      padding: 2px 8px;
-      border-radius: 4px;
-      color: #f0c27f;
-    }
 
     footer {
       text-align: center;
@@ -197,16 +331,10 @@
 </header>
 
 <div id="photo-count"></div>
-
-<div class="gallery" id="gallery"></div>
+<div id="gallery-container"></div>
 
 <div class="empty-state" id="empty-state" style="display:none;">
   <h2>まだ写真・動画がありません</h2>
-  <p>
-    <code>photos/</code> フォルダにファイルを入れてください。<br>
-    画像: JPG, PNG, GIF, WebP, HEIC<br>
-    動画: MP4, MOV, WebM
-  </p>
 </div>
 
 <!-- ライトボックス -->
@@ -215,8 +343,28 @@
   <button id="lightbox-prev">&#8249;</button>
   <img id="lightbox-img" src="" alt="">
   <video id="lightbox-video" src="" controls playsinline style="display:none;"></video>
-  <div id="lightbox-caption"></div>
+  <div id="lightbox-info">
+    <div id="lightbox-event"></div>
+    <div id="lightbox-detail"></div>
+    <div id="lightbox-memo"></div>
+    <button class="lb-edit-btn" id="lb-edit-btn">✏️ 編集・メモ</button>
+  </div>
   <button id="lightbox-next">&#8250;</button>
+</div>
+
+<!-- 編集モーダル -->
+<div id="edit-modal">
+  <div class="edit-box">
+    <h3>📝 写真情報を編集</h3>
+    <label>イベント名</label>
+    <input type="text" id="edit-event" placeholder="例: 忘年会 2026">
+    <label>メモ</label>
+    <textarea id="edit-memo" placeholder="自由にメモを入力..."></textarea>
+    <div class="edit-actions">
+      <button class="btn-cancel" id="edit-cancel">キャンセル</button>
+      <button class="btn-save" id="edit-save">保存</button>
+    </div>
+  </div>
 </div>
 
 <footer>
@@ -224,31 +372,45 @@
 </footer>
 
 <script>
-  // photos/ フォルダの画像を自動スキャン（GitHub Pages / ローカルサーバー用）
-  // ローカルファイルで開く場合は下の PHOTOS 配列に手動で追加してください
-
-  // ============================================================
-  // メディアリスト（自動読み込みが使えない場合はここに手動追加）
-  // 例: 'photos/IMG_001.jpg', 'photos/VID_001.mp4'
-  const PHOTOS = [
-    // 'photos/IMG_001.jpg',
-    // 'photos/VID_001.mp4',
-  ];
-  // ============================================================
-
+  const BOT_URL = 'https://matsushima-bot.onrender.com';
   const VIDEO_EXTS = ['mp4', 'mov', 'webm', 'm4v'];
+
+  let allPhotos = [];
+  let metadata = {};
+  let currentIndex = 0;
 
   function isVideo(src) {
     const ext = src.split('.').pop().toLowerCase();
     return VIDEO_EXTS.includes(ext);
   }
 
-  let currentIndex = 0;
+  function getFilename(src) {
+    return src.split('/').pop();
+  }
+
+  function getMeta(src) {
+    const fn = getFilename(src);
+    return metadata[fn] || {};
+  }
+
+  // イベントごとにグループ化
+  function groupByEvent(photos) {
+    const groups = {};
+    photos.forEach(src => {
+      const m = getMeta(src);
+      const event = m.event || '未分類';
+      if (!groups[event]) groups[event] = [];
+      groups[event].push(src);
+    });
+    return groups;
+  }
 
   function buildGallery(photos) {
-    const gallery = document.getElementById('gallery');
+    const container = document.getElementById('gallery-container');
     const emptyState = document.getElementById('empty-state');
     const countEl = document.getElementById('photo-count');
+
+    container.innerHTML = '';
 
     if (photos.length === 0) {
       emptyState.style.display = 'block';
@@ -262,41 +424,74 @@
     if (vidCount > 0) parts.push(`動画 ${vidCount} 本`);
     countEl.textContent = parts.join(' / ');
 
-    photos.forEach((src, i) => {
-      const item = document.createElement('div');
-      item.className = 'gallery-item';
+    const groups = groupByEvent(photos);
+    const sortedEvents = Object.keys(groups).sort((a, b) => {
+      // 日付が含まれるものを先に
+      return a.localeCompare(b, 'ja');
+    });
 
-      const nameLabel = src.split('/').pop().replace(/\.[^.]+$/, '');
+    sortedEvents.forEach(eventName => {
+      const eventPhotos = groups[eventName];
+      const section = document.createElement('div');
+      section.className = 'event-section';
 
-      if (isVideo(src)) {
-        const video = document.createElement('video');
-        video.src = src;
-        video.muted = true;
-        video.preload = 'metadata';
-        video.playsInline = true;
-        video.addEventListener('loadeddata', () => { video.currentTime = 0.5; });
+      const header = document.createElement('div');
+      header.className = 'event-header';
+      header.innerHTML = `
+        <span class="event-icon">📅</span>
+        <span class="event-name">${eventName}</span>
+        <span class="event-count">${eventPhotos.length}枚</span>
+      `;
 
-        const badge = document.createElement('div');
-        badge.className = 'video-badge';
-        badge.textContent = '▶ 動画';
+      const gallery = document.createElement('div');
+      gallery.className = 'gallery';
 
-        item.appendChild(video);
-        item.appendChild(badge);
-      } else {
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = nameLabel;
-        img.loading = 'lazy';
-        item.appendChild(img);
-      }
+      eventPhotos.forEach(src => {
+        const globalIndex = photos.indexOf(src);
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
 
-      const caption = document.createElement('div');
-      caption.className = 'caption';
-      caption.textContent = nameLabel;
+        const m = getMeta(src);
+        const nameLabel = getFilename(src).replace(/\.[^.]+$/, '');
 
-      item.appendChild(caption);
-      item.addEventListener('click', () => openLightbox(i, photos));
-      gallery.appendChild(item);
+        if (isVideo(src)) {
+          const video = document.createElement('video');
+          video.src = src;
+          video.muted = true;
+          video.preload = 'metadata';
+          video.playsInline = true;
+          video.addEventListener('loadeddata', () => { video.currentTime = 0.5; });
+
+          const badge = document.createElement('div');
+          badge.className = 'video-badge';
+          badge.textContent = '▶ 動画';
+
+          item.appendChild(video);
+          item.appendChild(badge);
+        } else {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = nameLabel;
+          img.loading = 'lazy';
+          item.appendChild(img);
+        }
+
+        const caption = document.createElement('div');
+        caption.className = 'caption';
+        let capText = '';
+        if (m.sender) capText += `<span class="sender">${m.sender}</span> `;
+        if (m.date) capText += m.date;
+        if (m.memo) capText += `<br>${m.memo}`;
+        caption.innerHTML = capText || nameLabel;
+
+        item.appendChild(caption);
+        item.addEventListener('click', () => openLightbox(globalIndex, photos));
+        gallery.appendChild(item);
+      });
+
+      section.appendChild(header);
+      section.appendChild(gallery);
+      container.appendChild(section);
     });
   }
 
@@ -305,10 +500,9 @@
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightbox-img');
     const lbVideo = document.getElementById('lightbox-video');
-    const lbCap = document.getElementById('lightbox-caption');
 
     const src = photos[index];
-    lbCap.textContent = src.split('/').pop().replace(/\.[^.]+$/, '');
+    const m = getMeta(src);
 
     if (isVideo(src)) {
       lbImg.style.display = 'none';
@@ -324,6 +518,11 @@
       lbImg.src = src;
     }
 
+    document.getElementById('lightbox-event').textContent = m.event || '未分類';
+    document.getElementById('lightbox-detail').textContent =
+      `${m.sender || ''} ${m.date || ''} ${m.time || ''}`.trim();
+    document.getElementById('lightbox-memo').textContent = m.memo || '';
+
     lb.classList.add('active');
     lb._photos = photos;
   }
@@ -336,27 +535,79 @@
     lb.classList.remove('active');
   }
 
-  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  // 編集モーダル
+  function openEditModal() {
+    const lb = document.getElementById('lightbox');
+    const photos = lb._photos;
+    const src = photos[currentIndex];
+    const m = getMeta(src);
 
+    document.getElementById('edit-event').value = m.event || '';
+    document.getElementById('edit-memo').value = m.memo || '';
+    document.getElementById('edit-modal').classList.add('active');
+  }
+
+  async function saveEdit() {
+    const lb = document.getElementById('lightbox');
+    const photos = lb._photos;
+    const src = photos[currentIndex];
+    const fn = getFilename(src);
+
+    const newEvent = document.getElementById('edit-event').value;
+    const newMemo = document.getElementById('edit-memo').value;
+
+    // ローカル更新
+    if (!metadata[fn]) metadata[fn] = {};
+    metadata[fn].event = newEvent;
+    metadata[fn].memo = newMemo;
+
+    // 表示を更新
+    document.getElementById('lightbox-event').textContent = newEvent || '未分類';
+    document.getElementById('lightbox-memo').textContent = newMemo || '';
+
+    document.getElementById('edit-modal').classList.remove('active');
+
+    // サーバーに保存
+    try {
+      await fetch(`${BOT_URL}/api/update-meta`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: fn, event: newEvent, memo: newMemo }),
+      });
+    } catch (err) {
+      console.warn('保存に失敗しましたが、表示は更新されています');
+    }
+
+    // ギャラリーを再描画
+    buildGallery(allPhotos);
+  }
+
+  // イベントリスナー
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
   document.getElementById('lightbox').addEventListener('click', (e) => {
     if (e.target === document.getElementById('lightbox')) closeLightbox();
   });
 
   document.getElementById('lightbox-prev').addEventListener('click', () => {
-    const lb = document.getElementById('lightbox');
-    const photos = lb._photos;
+    const photos = document.getElementById('lightbox')._photos;
     currentIndex = (currentIndex - 1 + photos.length) % photos.length;
     openLightbox(currentIndex, photos);
   });
 
   document.getElementById('lightbox-next').addEventListener('click', () => {
-    const lb = document.getElementById('lightbox');
-    const photos = lb._photos;
+    const photos = document.getElementById('lightbox')._photos;
     currentIndex = (currentIndex + 1) % photos.length;
     openLightbox(currentIndex, photos);
   });
 
+  document.getElementById('lb-edit-btn').addEventListener('click', openEditModal);
+  document.getElementById('edit-save').addEventListener('click', saveEdit);
+  document.getElementById('edit-cancel').addEventListener('click', () => {
+    document.getElementById('edit-modal').classList.remove('active');
+  });
+
   document.addEventListener('keydown', (e) => {
+    if (document.getElementById('edit-modal').classList.contains('active')) return;
     const lb = document.getElementById('lightbox');
     if (!lb.classList.contains('active')) return;
     if (e.key === 'ArrowLeft') document.getElementById('lightbox-prev').click();
@@ -365,26 +616,36 @@
     if (e.key === ' ') { e.preventDefault(); const v = document.getElementById('lightbox-video'); if (v.style.display !== 'none') v.paused ? v.play() : v.pause(); }
   });
 
-  // GitHub Pages でホストする場合は photos-list.js が自動生成されます
-  // ローカルで開く場合は上の PHOTOS 配列を使います
-  if (PHOTOS.length > 0) {
-    buildGallery(PHOTOS);
-  } else {
-    // photos-list.js (GitHub Actions で自動生成) があれば使う
-    const script = document.createElement('script');
-    script.src = 'photos-list.js';
-    script.onload = () => {
-      if (typeof PHOTO_LIST !== 'undefined') {
-        buildGallery(PHOTO_LIST);
-      } else {
+  // 初期化：写真リスト＋メタデータを読み込み
+  async function init() {
+    // メタデータ読み込み
+    try {
+      const res = await fetch('photos-meta.json');
+      if (res.ok) metadata = await res.json();
+    } catch (e) {}
+
+    // 写真リスト読み込み
+    try {
+      const script = document.createElement('script');
+      script.src = 'photos-list.js';
+      script.onload = () => {
+        if (typeof PHOTO_LIST !== 'undefined') {
+          allPhotos = PHOTO_LIST;
+          buildGallery(allPhotos);
+        } else {
+          document.getElementById('empty-state').style.display = 'block';
+        }
+      };
+      script.onerror = () => {
         document.getElementById('empty-state').style.display = 'block';
-      }
-    };
-    script.onerror = () => {
+      };
+      document.head.appendChild(script);
+    } catch (e) {
       document.getElementById('empty-state').style.display = 'block';
-    };
-    document.head.appendChild(script);
+    }
   }
+
+  init();
 </script>
 
 </body>

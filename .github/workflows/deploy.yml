@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'photos/**'
+      - 'photos-meta.json'
       - 'index.html'
       - '.github/workflows/deploy.yml'
 
