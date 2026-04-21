@@ -4,103 +4,212 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>松島会アルバム</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #0c0c14;
+      --surface: #16161f;
+      --surface2: #1e1e2a;
+      --surface3: #262636;
+      --border: rgba(255,255,255,0.06);
+      --gold: #d4a853;
+      --gold-light: #e8c97a;
+      --gold-glow: rgba(212,168,83,0.15);
+      --text: #f0ece4;
+      --text-sub: #9a968e;
+      --text-dim: #5a5750;
+      --accent: #c9815b;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
-      background: #1a1a2e;
-      color: #eee;
+      font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
-    header {
+    /* ===== ヒーローヘッダー ===== */
+    .hero {
+      position: relative;
+      padding: 80px 20px 60px;
       text-align: center;
-      padding: 40px 20px 20px;
+      overflow: hidden;
     }
 
-    header h1 {
-      font-size: 2.2rem;
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at 50% 0%, var(--gold-glow), transparent),
+        radial-gradient(ellipse 400px 300px at 80% 100%, rgba(201,129,91,0.08), transparent);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(212,168,83,0.3);
+      padding: 6px 18px;
+      border-radius: 30px;
+      margin-bottom: 24px;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--gold-light), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== 統計バー ===== */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 20px;
+      margin: 0 auto 10px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
       letter-spacing: 0.15em;
-      color: #f0c27f;
-      margin-bottom: 8px;
+      text-transform: uppercase;
+      margin-top: 2px;
     }
 
-    header p { color: #aaa; font-size: 0.95rem; }
-
-    #photo-count {
-      text-align: center;
-      margin: 10px 0 20px;
-      color: #888;
-      font-size: 0.9rem;
+    /* ===== ナビ ===== */
+    .nav-filter {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 20px 30px;
+      flex-wrap: wrap;
     }
 
-    /* イベントセクション */
+    .nav-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      padding: 8px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-family: inherit;
+      transition: all 0.3s;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: var(--gold);
+      color: var(--bg);
+      border-color: var(--gold);
+      font-weight: 500;
+    }
+
+    /* ===== イベントセクション ===== */
     .event-section {
-      max-width: 1400px;
-      margin: 0 auto 30px;
-      padding: 0 20px;
+      max-width: 1500px;
+      margin: 0 auto 50px;
+      padding: 0 24px;
     }
 
     .event-header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
-      padding: 10px 16px;
-      background: #2a2a3e;
-      border-radius: 8px;
-      cursor: pointer;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .event-header:hover { background: #333352; }
-
-    .event-icon { font-size: 1.2rem; }
+    .event-line {
+      width: 3px;
+      height: 22px;
+      background: linear-gradient(to bottom, var(--gold), var(--accent));
+      border-radius: 2px;
+    }
 
     .event-name {
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #f0c27f;
+      font-family: 'Playfair Display', 'Noto Sans JP', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
       flex: 1;
     }
 
     .event-count {
-      font-size: 0.85rem;
-      color: #888;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      background: var(--surface2);
+      padding: 4px 12px;
+      border-radius: 20px;
     }
 
-    .event-edit-btn {
-      background: none;
-      border: 1px solid #555;
-      color: #aaa;
-      padding: 3px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.8rem;
-    }
-
-    .event-edit-btn:hover { border-color: #f0c27f; color: #f0c27f; }
-
-    /* グリッドギャラリー */
+    /* ===== マソンリー風グリッド ===== */
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
     }
 
     .gallery-item {
       position: relative;
       overflow: hidden;
-      border-radius: 8px;
+      border-radius: var(--radius);
       cursor: pointer;
-      aspect-ratio: 1 / 1;
-      background: #2a2a3e;
-      transition: transform 0.2s, box-shadow 0.2s;
+      background: var(--surface);
+      transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.4s;
     }
 
+    .gallery-item:nth-child(5n+1) { aspect-ratio: 1/1; }
+    .gallery-item:nth-child(5n+2) { aspect-ratio: 4/5; }
+    .gallery-item:nth-child(5n+3) { aspect-ratio: 1/1; }
+    .gallery-item:nth-child(5n+4) { aspect-ratio: 3/4; }
+    .gallery-item:nth-child(5n+5) { aspect-ratio: 5/4; }
+
     .gallery-item:hover {
-      transform: scale(1.03);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     }
 
     .gallery-item img,
@@ -109,47 +218,88 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .gallery-item:hover img,
+    .gallery-item:hover video {
+      transform: scale(1.05);
     }
 
     .gallery-item .video-badge {
       position: absolute;
-      top: 10px;
-      left: 10px;
-      background: rgba(0,0,0,0.6);
+      top: 12px;
+      left: 12px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
       color: #fff;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.7rem;
       pointer-events: none;
+      letter-spacing: 0.05em;
     }
 
-    .gallery-item .caption {
+    .gallery-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-item:hover .overlay { opacity: 1; }
+
+    .gallery-item .meta {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.8));
-      padding: 24px 8px 6px;
-      font-size: 0.75rem;
-      color: #ddd;
+      padding: 16px;
+      transform: translateY(8px);
       opacity: 0;
-      transition: opacity 0.2s;
+      transition: all 0.3s;
     }
 
-    .gallery-item:hover .caption { opacity: 1; }
+    .gallery-item:hover .meta {
+      transform: translateY(0);
+      opacity: 1;
+    }
 
-    .caption .sender { color: #f0c27f; }
+    .meta .sender {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--gold-light);
+    }
 
-    /* ライトボックス */
+    .meta .date {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 2px;
+    }
+
+    .meta .memo-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(4px);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-top: 6px;
+    }
+
+    /* ===== ライトボックス ===== */
     #lightbox {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.92);
+      background: rgba(0,0,0,0.95);
       z-index: 1000;
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      backdrop-filter: blur(20px);
     }
 
     #lightbox.active { display: flex; }
@@ -157,61 +307,82 @@
     #lightbox img,
     #lightbox video {
       max-width: 90vw;
-      max-height: 65vh;
-      border-radius: 6px;
+      max-height: 68vh;
+      border-radius: var(--radius);
       object-fit: contain;
     }
 
     #lightbox-info {
-      margin-top: 14px;
+      margin-top: 20px;
       text-align: center;
       max-width: 600px;
       width: 90vw;
     }
 
     #lightbox-event {
-      color: #f0c27f;
-      font-size: 1rem;
-      font-weight: bold;
-      margin-bottom: 4px;
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
     }
 
     #lightbox-detail {
-      color: #999;
-      font-size: 0.85rem;
-      margin-bottom: 8px;
+      color: var(--text-sub);
+      font-size: 0.8rem;
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
     }
 
     #lightbox-memo {
-      color: #ccc;
-      font-size: 0.9rem;
+      color: var(--text);
+      font-size: 0.85rem;
       font-style: italic;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      opacity: 0.7;
     }
 
     .lb-edit-btn {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid #555;
-      color: #ccc;
-      padding: 6px 16px;
-      border-radius: 6px;
+      background: var(--surface3);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      padding: 8px 24px;
+      border-radius: 30px;
       cursor: pointer;
-      font-size: 0.85rem;
-      margin: 4px;
+      font-size: 0.8rem;
+      font-family: inherit;
+      transition: all 0.3s;
+      letter-spacing: 0.05em;
     }
 
-    .lb-edit-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+    .lb-edit-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
 
     #lightbox-close {
       position: fixed;
-      top: 20px;
-      right: 24px;
-      font-size: 2rem;
-      color: #fff;
+      top: 24px;
+      right: 28px;
+      font-size: 1.6rem;
+      color: var(--text-sub);
       cursor: pointer;
-      background: none;
-      border: none;
+      background: var(--surface3);
+      border: 1px solid var(--border);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
       line-height: 1;
+    }
+
+    #lightbox-close:hover {
+      background: var(--gold);
+      color: var(--bg);
+      border-color: var(--gold);
     }
 
     #lightbox-prev,
@@ -219,28 +390,37 @@
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 2.5rem;
-      color: #fff;
-      background: rgba(255,255,255,0.1);
-      border: none;
+      font-size: 1.4rem;
+      color: var(--text-sub);
+      background: var(--surface3);
+      border: 1px solid var(--border);
       cursor: pointer;
-      padding: 10px 18px;
-      border-radius: 6px;
-      transition: background 0.2s;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
     }
 
     #lightbox-prev:hover,
-    #lightbox-next:hover { background: rgba(255,255,255,0.25); }
+    #lightbox-next:hover {
+      background: var(--gold);
+      color: var(--bg);
+      border-color: var(--gold);
+    }
 
-    #lightbox-prev { left: 10px; }
-    #lightbox-next { right: 10px; }
+    #lightbox-prev { left: 16px; }
+    #lightbox-next { right: 16px; }
 
-    /* 編集モーダル */
+    /* ===== 編集モーダル ===== */
     #edit-modal {
       display: none;
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
       z-index: 2000;
       align-items: center;
       justify-content: center;
@@ -249,92 +429,171 @@
     #edit-modal.active { display: flex; }
 
     .edit-box {
-      background: #2a2a3e;
-      border-radius: 12px;
-      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
       width: 90vw;
-      max-width: 400px;
+      max-width: 420px;
     }
 
     .edit-box h3 {
-      color: #f0c27f;
-      margin-bottom: 16px;
-      font-size: 1.1rem;
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      margin-bottom: 24px;
+      font-size: 1.2rem;
+      font-weight: 600;
     }
 
     .edit-box label {
       display: block;
-      color: #aaa;
-      font-size: 0.85rem;
-      margin-bottom: 4px;
-      margin-top: 12px;
+      color: var(--text-sub);
+      font-size: 0.75rem;
+      margin-bottom: 6px;
+      margin-top: 16px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
     .edit-box input,
     .edit-box textarea {
       width: 100%;
-      padding: 8px 12px;
-      background: #1a1a2e;
-      border: 1px solid #555;
-      border-radius: 6px;
-      color: #eee;
-      font-size: 0.95rem;
+      padding: 12px 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 0.9rem;
       font-family: inherit;
+      transition: border-color 0.3s;
     }
 
-    .edit-box textarea { height: 80px; resize: vertical; }
+    .edit-box textarea { height: 100px; resize: vertical; }
 
     .edit-box input:focus,
-    .edit-box textarea:focus { border-color: #f0c27f; outline: none; }
+    .edit-box textarea:focus {
+      border-color: var(--gold);
+      outline: none;
+      box-shadow: 0 0 0 3px var(--gold-glow);
+    }
 
     .edit-actions {
       display: flex;
       gap: 10px;
-      margin-top: 16px;
+      margin-top: 24px;
       justify-content: flex-end;
     }
 
     .edit-actions button {
-      padding: 8px 20px;
+      padding: 10px 28px;
       border: none;
-      border-radius: 6px;
+      border-radius: 30px;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      font-family: inherit;
+      transition: all 0.3s;
+      letter-spacing: 0.05em;
     }
 
-    .btn-save { background: #f0c27f; color: #1a1a2e; font-weight: bold; }
-    .btn-cancel { background: #444; color: #ccc; }
+    .btn-save {
+      background: linear-gradient(135deg, var(--gold), var(--accent));
+      color: #fff;
+      font-weight: 500;
+    }
 
-    /* 写真がない場合 */
+    .btn-save:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--gold-glow); }
+
+    .btn-cancel {
+      background: var(--surface3);
+      color: var(--text-sub);
+      border: 1px solid var(--border);
+    }
+
+    /* ===== 空状態 ===== */
     .empty-state {
       text-align: center;
-      padding: 80px 20px;
-      color: #666;
+      padding: 100px 20px;
+      color: var(--text-dim);
     }
 
-    .empty-state h2 { font-size: 1.3rem; margin-bottom: 12px; color: #888; }
-    .empty-state p { line-height: 1.8; font-size: 0.9rem; }
+    .empty-state h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--text-sub);
+      margin-bottom: 12px;
+    }
 
+    /* ===== フッター ===== */
     footer {
       text-align: center;
-      padding: 40px 20px;
-      color: #555;
-      font-size: 0.8rem;
+      padding: 60px 20px 40px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    footer p {
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+    }
+
+    /* ===== アニメーション ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .gallery-item {
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .gallery-item:nth-child(1) { animation-delay: 0.02s; }
+    .gallery-item:nth-child(2) { animation-delay: 0.04s; }
+    .gallery-item:nth-child(3) { animation-delay: 0.06s; }
+    .gallery-item:nth-child(4) { animation-delay: 0.08s; }
+    .gallery-item:nth-child(5) { animation-delay: 0.10s; }
+    .gallery-item:nth-child(6) { animation-delay: 0.12s; }
+    .gallery-item:nth-child(7) { animation-delay: 0.14s; }
+    .gallery-item:nth-child(8) { animation-delay: 0.16s; }
+
+    /* ===== モバイル ===== */
+    @media (max-width: 768px) {
+      .hero { padding: 50px 16px 40px; }
+      .stats-bar { gap: 24px; }
+      .gallery { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .gallery-item:nth-child(n) { aspect-ratio: 1/1; }
+      .event-section { padding: 0 12px; }
+      #lightbox-prev { left: 8px; }
+      #lightbox-next { right: 8px; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+      .gallery-item { border-radius: 8px; }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>松島会アルバム</h1>
-  <p>みんなの思い出</p>
-</header>
+<!-- ヒーロー -->
+<div class="hero">
+  <div class="hero-badge">Private Collection</div>
+  <h1><span>松島会</span> Album</h1>
+  <p class="hero-sub">みんなの思い出をひとつに</p>
+</div>
 
-<div id="photo-count"></div>
+<!-- 統計 -->
+<div class="stats-bar" id="stats-bar"></div>
+
+<!-- フィルター -->
+<div class="nav-filter" id="nav-filter"></div>
+
+<!-- ギャラリー -->
 <div id="gallery-container"></div>
 
 <div class="empty-state" id="empty-state" style="display:none;">
-  <h2>まだ写真・動画がありません</h2>
+  <h2>No Photos Yet</h2>
+  <p>写真・動画がまだありません</p>
 </div>
 
 <!-- ライトボックス -->
@@ -355,20 +614,20 @@
 <!-- 編集モーダル -->
 <div id="edit-modal">
   <div class="edit-box">
-    <h3>📝 写真情報を編集</h3>
+    <h3>Edit Info</h3>
     <label>イベント名</label>
     <input type="text" id="edit-event" placeholder="例: 忘年会 2026">
     <label>メモ</label>
     <textarea id="edit-memo" placeholder="自由にメモを入力..."></textarea>
     <div class="edit-actions">
       <button class="btn-cancel" id="edit-cancel">キャンセル</button>
-      <button class="btn-save" id="edit-save">保存</button>
+      <button class="btn-save" id="edit-save">保存する</button>
     </div>
   </div>
 </div>
 
 <footer>
-  松島会 &mdash; 大切な思い出
+  <p>MATSUSHIMA-KAI &mdash; PRIVATE ALBUM</p>
 </footer>
 
 <script>
@@ -378,59 +637,82 @@
   let allPhotos = [];
   let metadata = {};
   let currentIndex = 0;
+  let currentFilter = 'all';
 
   function isVideo(src) {
-    const ext = src.split('.').pop().toLowerCase();
-    return VIDEO_EXTS.includes(ext);
+    return VIDEO_EXTS.includes(src.split('.').pop().toLowerCase());
   }
 
-  function getFilename(src) {
-    return src.split('/').pop();
+  function getFilename(src) { return src.split('/').pop(); }
+
+  function getMeta(src) { return metadata[getFilename(src)] || {}; }
+
+  function getEventList(photos) {
+    const events = new Set();
+    photos.forEach(src => {
+      const m = getMeta(src);
+      events.add(m.event || '未分類');
+    });
+    return Array.from(events).sort((a, b) => a.localeCompare(b, 'ja'));
   }
 
-  function getMeta(src) {
-    const fn = getFilename(src);
-    return metadata[fn] || {};
-  }
-
-  // イベントごとにグループ化
   function groupByEvent(photos) {
     const groups = {};
     photos.forEach(src => {
-      const m = getMeta(src);
-      const event = m.event || '未分類';
+      const event = getMeta(src).event || '未分類';
       if (!groups[event]) groups[event] = [];
       groups[event].push(src);
     });
     return groups;
   }
 
-  function buildGallery(photos) {
-    const container = document.getElementById('gallery-container');
-    const emptyState = document.getElementById('empty-state');
-    const countEl = document.getElementById('photo-count');
-
-    container.innerHTML = '';
-
-    if (photos.length === 0) {
-      emptyState.style.display = 'block';
-      return;
-    }
-
+  function buildStats(photos) {
+    const bar = document.getElementById('stats-bar');
     const imgCount = photos.filter(s => !isVideo(s)).length;
     const vidCount = photos.filter(s => isVideo(s)).length;
-    const parts = [];
-    if (imgCount > 0) parts.push(`写真 ${imgCount} 枚`);
-    if (vidCount > 0) parts.push(`動画 ${vidCount} 本`);
-    countEl.textContent = parts.join(' / ');
+    const eventCount = getEventList(photos).length;
 
-    const groups = groupByEvent(photos);
-    const sortedEvents = Object.keys(groups).sort((a, b) => {
-      // 日付が含まれるものを先に
-      return a.localeCompare(b, 'ja');
+    bar.innerHTML = `
+      <div class="stat"><div class="stat-num">${imgCount}</div><div class="stat-label">Photos</div></div>
+      ${vidCount > 0 ? `<div class="stat"><div class="stat-num">${vidCount}</div><div class="stat-label">Videos</div></div>` : ''}
+      <div class="stat"><div class="stat-num">${eventCount}</div><div class="stat-label">Events</div></div>
+    `;
+  }
+
+  function buildFilter(photos) {
+    const nav = document.getElementById('nav-filter');
+    const events = getEventList(photos);
+
+    let html = `<button class="nav-btn active" data-filter="all">すべて</button>`;
+    events.forEach(e => {
+      html += `<button class="nav-btn" data-filter="${e}">${e}</button>`;
     });
+    nav.innerHTML = html;
 
-    sortedEvents.forEach(eventName => {
+    nav.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        nav.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderGallery(allPhotos);
+      });
+    });
+  }
+
+  function renderGallery(photos) {
+    const container = document.getElementById('gallery-container');
+    container.innerHTML = '';
+
+    const filtered = currentFilter === 'all'
+      ? photos
+      : photos.filter(src => (getMeta(src).event || '未分類') === currentFilter);
+
+    if (filtered.length === 0) return;
+
+    const groups = groupByEvent(filtered);
+    const sorted = Object.keys(groups).sort((a, b) => a.localeCompare(b, 'ja'));
+
+    sorted.forEach(eventName => {
       const eventPhotos = groups[eventName];
       const section = document.createElement('div');
       section.className = 'event-section';
@@ -438,9 +720,9 @@
       const header = document.createElement('div');
       header.className = 'event-header';
       header.innerHTML = `
-        <span class="event-icon">📅</span>
+        <div class="event-line"></div>
         <span class="event-name">${eventName}</span>
-        <span class="event-count">${eventPhotos.length}枚</span>
+        <span class="event-count">${eventPhotos.length} items</span>
       `;
 
       const gallery = document.createElement('div');
@@ -450,41 +732,37 @@
         const globalIndex = photos.indexOf(src);
         const item = document.createElement('div');
         item.className = 'gallery-item';
-
         const m = getMeta(src);
-        const nameLabel = getFilename(src).replace(/\.[^.]+$/, '');
 
         if (isVideo(src)) {
           const video = document.createElement('video');
-          video.src = src;
-          video.muted = true;
-          video.preload = 'metadata';
-          video.playsInline = true;
+          video.src = src; video.muted = true; video.preload = 'metadata'; video.playsInline = true;
           video.addEventListener('loadeddata', () => { video.currentTime = 0.5; });
+          item.appendChild(video);
 
           const badge = document.createElement('div');
           badge.className = 'video-badge';
-          badge.textContent = '▶ 動画';
-
-          item.appendChild(video);
+          badge.textContent = '▶ VIDEO';
           item.appendChild(badge);
         } else {
           const img = document.createElement('img');
-          img.src = src;
-          img.alt = nameLabel;
-          img.loading = 'lazy';
+          img.src = src; img.alt = ''; img.loading = 'lazy';
           item.appendChild(img);
         }
 
-        const caption = document.createElement('div');
-        caption.className = 'caption';
-        let capText = '';
-        if (m.sender) capText += `<span class="sender">${m.sender}</span> `;
-        if (m.date) capText += m.date;
-        if (m.memo) capText += `<br>${m.memo}`;
-        caption.innerHTML = capText || nameLabel;
+        const overlay = document.createElement('div');
+        overlay.className = 'overlay';
+        item.appendChild(overlay);
 
-        item.appendChild(caption);
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        let metaHTML = '';
+        if (m.sender) metaHTML += `<div class="sender">${m.sender}</div>`;
+        if (m.date) metaHTML += `<div class="date">${m.date}</div>`;
+        if (m.memo) metaHTML += `<div class="memo-tag">${m.memo}</div>`;
+        meta.innerHTML = metaHTML;
+        item.appendChild(meta);
+
         item.addEventListener('click', () => openLightbox(globalIndex, photos));
         gallery.appendChild(item);
       });
@@ -495,118 +773,97 @@
     });
   }
 
+  function buildGallery(photos) {
+    if (photos.length === 0) {
+      document.getElementById('empty-state').style.display = 'block';
+      return;
+    }
+    buildStats(photos);
+    buildFilter(photos);
+    renderGallery(photos);
+  }
+
   function openLightbox(index, photos) {
     currentIndex = index;
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightbox-img');
     const lbVideo = document.getElementById('lightbox-video');
-
     const src = photos[index];
     const m = getMeta(src);
 
     if (isVideo(src)) {
-      lbImg.style.display = 'none';
-      lbImg.src = '';
-      lbVideo.style.display = 'block';
-      lbVideo.src = src;
-      lbVideo.play();
+      lbImg.style.display = 'none'; lbImg.src = '';
+      lbVideo.style.display = 'block'; lbVideo.src = src; lbVideo.play();
     } else {
-      lbVideo.style.display = 'none';
-      lbVideo.pause();
-      lbVideo.src = '';
-      lbImg.style.display = 'block';
-      lbImg.src = src;
+      lbVideo.style.display = 'none'; lbVideo.pause(); lbVideo.src = '';
+      lbImg.style.display = 'block'; lbImg.src = src;
     }
 
-    document.getElementById('lightbox-event').textContent = m.event || '未分類';
-    document.getElementById('lightbox-detail').textContent =
-      `${m.sender || ''} ${m.date || ''} ${m.time || ''}`.trim();
+    document.getElementById('lightbox-event').textContent = m.event || '';
+    document.getElementById('lightbox-detail').textContent = `${m.sender || ''} ${m.date || ''} ${m.time || ''}`.trim();
     document.getElementById('lightbox-memo').textContent = m.memo || '';
-
     lb.classList.add('active');
     lb._photos = photos;
   }
 
   function closeLightbox() {
     const lb = document.getElementById('lightbox');
-    const lbVideo = document.getElementById('lightbox-video');
-    lbVideo.pause();
-    lbVideo.src = '';
+    document.getElementById('lightbox-video').pause();
+    document.getElementById('lightbox-video').src = '';
     lb.classList.remove('active');
   }
 
-  // 編集モーダル
   function openEditModal() {
-    const lb = document.getElementById('lightbox');
-    const photos = lb._photos;
-    const src = photos[currentIndex];
+    const src = document.getElementById('lightbox')._photos[currentIndex];
     const m = getMeta(src);
-
     document.getElementById('edit-event').value = m.event || '';
     document.getElementById('edit-memo').value = m.memo || '';
     document.getElementById('edit-modal').classList.add('active');
   }
 
   async function saveEdit() {
-    const lb = document.getElementById('lightbox');
-    const photos = lb._photos;
-    const src = photos[currentIndex];
-    const fn = getFilename(src);
-
+    const photos = document.getElementById('lightbox')._photos;
+    const fn = getFilename(photos[currentIndex]);
     const newEvent = document.getElementById('edit-event').value;
     const newMemo = document.getElementById('edit-memo').value;
 
-    // ローカル更新
     if (!metadata[fn]) metadata[fn] = {};
     metadata[fn].event = newEvent;
     metadata[fn].memo = newMemo;
 
-    // 表示を更新
-    document.getElementById('lightbox-event').textContent = newEvent || '未分類';
+    document.getElementById('lightbox-event').textContent = newEvent || '';
     document.getElementById('lightbox-memo').textContent = newMemo || '';
-
     document.getElementById('edit-modal').classList.remove('active');
 
-    // サーバーに保存
     try {
       await fetch(`${BOT_URL}/api/update-meta`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ filename: fn, event: newEvent, memo: newMemo }),
       });
-    } catch (err) {
-      console.warn('保存に失敗しましたが、表示は更新されています');
-    }
+    } catch (err) {}
 
-    // ギャラリーを再描画
-    buildGallery(allPhotos);
+    renderGallery(allPhotos);
   }
 
-  // イベントリスナー
+  // Event listeners
   document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
-  document.getElementById('lightbox').addEventListener('click', (e) => {
-    if (e.target === document.getElementById('lightbox')) closeLightbox();
-  });
-
+  document.getElementById('lightbox').addEventListener('click', e => { if (e.target.id === 'lightbox') closeLightbox(); });
   document.getElementById('lightbox-prev').addEventListener('click', () => {
-    const photos = document.getElementById('lightbox')._photos;
-    currentIndex = (currentIndex - 1 + photos.length) % photos.length;
-    openLightbox(currentIndex, photos);
+    const p = document.getElementById('lightbox')._photos;
+    currentIndex = (currentIndex - 1 + p.length) % p.length;
+    openLightbox(currentIndex, p);
   });
-
   document.getElementById('lightbox-next').addEventListener('click', () => {
-    const photos = document.getElementById('lightbox')._photos;
-    currentIndex = (currentIndex + 1) % photos.length;
-    openLightbox(currentIndex, photos);
+    const p = document.getElementById('lightbox')._photos;
+    currentIndex = (currentIndex + 1) % p.length;
+    openLightbox(currentIndex, p);
   });
-
   document.getElementById('lb-edit-btn').addEventListener('click', openEditModal);
   document.getElementById('edit-save').addEventListener('click', saveEdit);
-  document.getElementById('edit-cancel').addEventListener('click', () => {
-    document.getElementById('edit-modal').classList.remove('active');
-  });
+  document.getElementById('edit-cancel').addEventListener('click', () => document.getElementById('edit-modal').classList.remove('active'));
 
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', e => {
     if (document.getElementById('edit-modal').classList.contains('active')) return;
     const lb = document.getElementById('lightbox');
     if (!lb.classList.contains('active')) return;
@@ -616,33 +873,25 @@
     if (e.key === ' ') { e.preventDefault(); const v = document.getElementById('lightbox-video'); if (v.style.display !== 'none') v.paused ? v.play() : v.pause(); }
   });
 
-  // 初期化：写真リスト＋メタデータを読み込み
+  // Init
   async function init() {
-    // メタデータ読み込み
     try {
       const res = await fetch('photos-meta.json');
       if (res.ok) metadata = await res.json();
     } catch (e) {}
 
-    // 写真リスト読み込み
-    try {
-      const script = document.createElement('script');
-      script.src = 'photos-list.js';
-      script.onload = () => {
-        if (typeof PHOTO_LIST !== 'undefined') {
-          allPhotos = PHOTO_LIST;
-          buildGallery(allPhotos);
-        } else {
-          document.getElementById('empty-state').style.display = 'block';
-        }
-      };
-      script.onerror = () => {
+    const script = document.createElement('script');
+    script.src = 'photos-list.js';
+    script.onload = () => {
+      if (typeof PHOTO_LIST !== 'undefined') {
+        allPhotos = PHOTO_LIST;
+        buildGallery(allPhotos);
+      } else {
         document.getElementById('empty-state').style.display = 'block';
-      };
-      document.head.appendChild(script);
-    } catch (e) {
-      document.getElementById('empty-state').style.display = 'block';
-    }
+      }
+    };
+    script.onerror = () => document.getElementById('empty-state').style.display = 'block';
+    document.head.appendChild(script);
   }
 
   init();
