@@ -509,6 +509,203 @@
       border: 1px solid var(--border);
     }
 
+    /* ===== スライドショー ===== */
+    #slideshow {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 3000;
+      overflow: hidden;
+    }
+    #slideshow.active { display: block; }
+
+    .ss-layer {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+    }
+    .ss-layer.visible {
+      animation: ssFadeIn 1.2s ease-in-out forwards;
+    }
+    .ss-layer.fading-out {
+      animation: ssFadeOut 1.2s ease-in-out forwards;
+    }
+    @keyframes ssFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes ssFadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    .ss-layer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      will-change: transform;
+    }
+
+    @keyframes kenBurns1 {
+      0%   { transform: scale(1.0) translate(0, 0); }
+      100% { transform: scale(1.2) translate(-3%, -2%); }
+    }
+    @keyframes kenBurns2 {
+      0%   { transform: scale(1.1) translate(-2%, 1%); }
+      100% { transform: scale(1.0) translate(2%, -1%); }
+    }
+    @keyframes kenBurns3 {
+      0%   { transform: scale(1.0) translate(2%, 2%); }
+      100% { transform: scale(1.15) translate(-1%, 0%); }
+    }
+    @keyframes kenBurns4 {
+      0%   { transform: scale(1.15) translate(0, -2%); }
+      100% { transform: scale(1.0) translate(1%, 2%); }
+    }
+
+    .ss-layer img.kb1 { animation: kenBurns1 7s ease-in-out forwards; }
+    .ss-layer img.kb2 { animation: kenBurns2 7s ease-in-out forwards; }
+    .ss-layer img.kb3 { animation: kenBurns3 7s ease-in-out forwards; }
+    .ss-layer img.kb4 { animation: kenBurns4 7s ease-in-out forwards; }
+
+    .ss-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 80px 40px 40px;
+      background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.8s 0.5s;
+    }
+    .ss-layer.visible .ss-info { opacity: 1; }
+
+    .ss-info-event {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--gold-light);
+      font-weight: 600;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .ss-info-detail {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.08em;
+    }
+    .ss-info-memo {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    /* コントロールバー */
+    .ss-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ss-progress {
+      width: 100%;
+      height: 3px;
+      background: rgba(255,255,255,0.15);
+      overflow: hidden;
+    }
+    .ss-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--accent));
+      width: 0%;
+      transition: width 0.15s linear;
+    }
+
+    .ss-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    #slideshow:hover .ss-bar,
+    #slideshow.paused .ss-bar { opacity: 1; }
+
+    .ss-bar button {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.8);
+      font-size: 1.1rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .ss-bar button:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--gold);
+    }
+
+    .ss-counter {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .ss-bar-center {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    /* ヒーローのスライドショーボタン */
+    .hero-actions {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .ss-start-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--gold), var(--accent));
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px var(--gold-glow);
+    }
+    .ss-start-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(212,168,83,0.3);
+    }
+    .ss-start-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
     /* ===== 空状態 ===== */
     .empty-state {
       text-align: center;
@@ -580,6 +777,12 @@
   <div class="hero-badge">Private Collection</div>
   <h1><span>松島会</span> Album</h1>
   <p class="hero-sub">みんなの思い出をひとつに</p>
+  <div class="hero-actions">
+    <button class="ss-start-btn" id="ss-start-btn" onclick="startSlideshow()">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      スライドショー
+    </button>
+  </div>
 </div>
 
 <!-- 統計 -->
@@ -622,6 +825,24 @@
     <div class="edit-actions">
       <button class="btn-cancel" id="edit-cancel">キャンセル</button>
       <button class="btn-save" id="edit-save">保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- スライドショー -->
+<div id="slideshow">
+  <div class="ss-layer" id="ss-layer-a"></div>
+  <div class="ss-layer" id="ss-layer-b"></div>
+  <div class="ss-controls">
+    <div class="ss-progress"><div class="ss-progress-fill" id="ss-progress"></div></div>
+    <div class="ss-bar">
+      <span class="ss-counter" id="ss-counter">1 / 82</span>
+      <div class="ss-bar-center">
+        <button id="ss-prev" title="前の写真">&#8249;</button>
+        <button id="ss-play" title="再生/一時停止">⏸</button>
+        <button id="ss-next" title="次の写真">&#8250;</button>
+      </div>
+      <button id="ss-close" title="閉じる">&times;</button>
     </div>
   </div>
 </div>
@@ -871,6 +1092,172 @@
     if (e.key === 'ArrowRight') document.getElementById('lightbox-next').click();
     if (e.key === 'Escape') closeLightbox();
     if (e.key === ' ') { e.preventDefault(); const v = document.getElementById('lightbox-video'); if (v.style.display !== 'none') v.paused ? v.play() : v.pause(); }
+  });
+
+  // ============================================================
+  // スライドショー
+  // ============================================================
+  const SS_INTERVAL = 5000; // 5秒ごと
+  let ssPhotos = [];
+  let ssIndex = 0;
+  let ssTimer = null;
+  let ssProgressTimer = null;
+  let ssProgressStart = 0;
+  let ssPaused = false;
+  let ssActiveLayer = 'a'; // 交互に切り替え
+  const kbClasses = ['kb1','kb2','kb3','kb4'];
+
+  function startSlideshow(startIdx) {
+    ssPhotos = allPhotos.filter(s => !isVideo(s)); // 写真のみ
+    if (ssPhotos.length === 0) return;
+
+    // シャッフル（Googleフォト風にランダム順）
+    for (let i = ssPhotos.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [ssPhotos[i], ssPhotos[j]] = [ssPhotos[j], ssPhotos[i]];
+    }
+
+    ssIndex = startIdx || 0;
+    ssPaused = false;
+    document.getElementById('slideshow').classList.add('active');
+    document.getElementById('slideshow').classList.remove('paused');
+    document.getElementById('ss-play').textContent = '⏸';
+    document.body.style.overflow = 'hidden';
+
+    showSlide(ssIndex);
+    scheduleNext();
+  }
+
+  function stopSlideshow() {
+    clearTimeout(ssTimer);
+    cancelAnimationFrame(ssProgressTimer);
+    document.getElementById('slideshow').classList.remove('active', 'paused');
+    document.getElementById('ss-layer-a').innerHTML = '';
+    document.getElementById('ss-layer-b').innerHTML = '';
+    document.getElementById('ss-layer-a').classList.remove('visible', 'fading-out');
+    document.getElementById('ss-layer-b').classList.remove('visible', 'fading-out');
+    document.body.style.overflow = '';
+  }
+
+  function showSlide(idx) {
+    const src = ssPhotos[idx];
+    const m = getMeta(src);
+
+    // 次に表示するレイヤーを決定（交互）
+    const nextLayer = ssActiveLayer === 'a' ? 'b' : 'a';
+    const showEl = document.getElementById(`ss-layer-${nextLayer}`);
+    const hideEl = document.getElementById(`ss-layer-${ssActiveLayer}`);
+
+    // Ken Burns クラスをランダムに選択
+    const kb = kbClasses[Math.floor(Math.random() * kbClasses.length)];
+
+    // 情報表示
+    let infoHtml = '';
+    if (m.event || m.sender || m.memo) {
+      infoHtml = '<div class="ss-info">';
+      if (m.event) infoHtml += `<div class="ss-info-event">${m.event}</div>`;
+      if (m.sender || m.date) infoHtml += `<div class="ss-info-detail">${m.sender || ''} ${m.date || ''}</div>`;
+      if (m.memo) infoHtml += `<div class="ss-info-memo">${m.memo}</div>`;
+      infoHtml += '</div>';
+    }
+
+    // リセット
+    showEl.classList.remove('visible', 'fading-out');
+    showEl.style.opacity = '0';
+    showEl.innerHTML = `<img src="${src}" class="${kb}" alt="">${infoHtml}`;
+
+    // 画像ロード後にクロスフェード
+    const img = showEl.querySelector('img');
+    const doFade = () => {
+      showEl.style.opacity = '';
+      showEl.classList.add('visible');
+      hideEl.classList.remove('visible');
+      hideEl.classList.add('fading-out');
+    };
+    if (img.complete && img.naturalWidth > 0) { doFade(); } else { img.onload = doFade; }
+
+    ssActiveLayer = nextLayer;
+
+    // カウンター更新
+    document.getElementById('ss-counter').textContent = `${idx + 1} / ${ssPhotos.length}`;
+
+    // プログレスバーアニメーション
+    startProgress();
+  }
+
+  function startProgress() {
+    cancelAnimationFrame(ssProgressTimer);
+    const bar = document.getElementById('ss-progress');
+    ssProgressStart = performance.now();
+
+    function tick(now) {
+      if (ssPaused) return;
+      const elapsed = now - ssProgressStart;
+      const pct = Math.min((elapsed / SS_INTERVAL) * 100, 100);
+      bar.style.width = pct + '%';
+      if (pct < 100) {
+        ssProgressTimer = requestAnimationFrame(tick);
+      }
+    }
+    ssProgressTimer = requestAnimationFrame(tick);
+  }
+
+  function scheduleNext() {
+    clearTimeout(ssTimer);
+    ssTimer = setTimeout(() => {
+      if (ssPaused) return;
+      ssIndex = (ssIndex + 1) % ssPhotos.length;
+      showSlide(ssIndex);
+      scheduleNext();
+    }, SS_INTERVAL);
+  }
+
+  function ssTogglePause() {
+    ssPaused = !ssPaused;
+    const ss = document.getElementById('slideshow');
+    const btn = document.getElementById('ss-play');
+    if (ssPaused) {
+      clearTimeout(ssTimer);
+      cancelAnimationFrame(ssProgressTimer);
+      btn.textContent = '▶';
+      ss.classList.add('paused');
+    } else {
+      btn.textContent = '⏸';
+      ss.classList.remove('paused');
+      // 次のスライドへ進む
+      ssIndex = (ssIndex + 1) % ssPhotos.length;
+      showSlide(ssIndex);
+      scheduleNext();
+    }
+  }
+
+  function ssGoPrev() {
+    clearTimeout(ssTimer);
+    ssIndex = (ssIndex - 1 + ssPhotos.length) % ssPhotos.length;
+    showSlide(ssIndex);
+    if (!ssPaused) scheduleNext();
+  }
+
+  function ssGoNext() {
+    clearTimeout(ssTimer);
+    ssIndex = (ssIndex + 1) % ssPhotos.length;
+    showSlide(ssIndex);
+    if (!ssPaused) scheduleNext();
+  }
+
+  // スライドショーイベント
+  document.getElementById('ss-close').addEventListener('click', stopSlideshow);
+  document.getElementById('ss-play').addEventListener('click', ssTogglePause);
+  document.getElementById('ss-prev').addEventListener('click', ssGoPrev);
+  document.getElementById('ss-next').addEventListener('click', ssGoNext);
+
+  document.addEventListener('keydown', e => {
+    const ss = document.getElementById('slideshow');
+    if (!ss.classList.contains('active')) return;
+    if (e.key === 'Escape') { stopSlideshow(); e.stopPropagation(); }
+    if (e.key === 'ArrowLeft') ssGoPrev();
+    if (e.key === 'ArrowRight') ssGoNext();
+    if (e.key === ' ') { e.preventDefault(); ssTogglePause(); }
   });
 
   // Init
