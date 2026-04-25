@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "album",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8765"],
-      "port": 8765
+      "name": "album-preview",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["http-server", "/Users/tomiyaatsushi/松島会アルバム", "-p", "8080", "-c-1"],
+      "port": 8080
     }
   ]
 }
