@@ -1,0 +1,18 @@
+name: Keep Bot Alive
+
+on:
+  schedule:
+    # 毎日 8:00〜23:00（日本時間）の間、14分おきにping
+    # UTC: 23:00〜14:00
+    - cron: '*/14 23-23,0-14 * * *'
+  workflow_dispatch: # 手動実行も可能
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Bot Server
+        run: |
+          echo "Pinging bot server to prevent sleep..."
+          curl -sf https://matsushima-bot.onrender.com/ || echo "Server might be starting up"
+          echo "Done at $(date)"
